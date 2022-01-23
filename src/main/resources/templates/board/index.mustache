@@ -1,0 +1,23 @@
+{{>include/header}}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">title</th>
+        <th scope="col">Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#boardList}}
+        <tr>
+            <th>{{id}}</th>
+            <td><a href="board/{{id}}">{{title}}</a></td>
+            <td>{{content}}</td>
+        </tr>
+    {{/boardList}}
+    </tbody>
+</table>
+
+<a class="btn btn-primary" href="/new"><button>글쓰기</button></a>
+{{>include/footer}}

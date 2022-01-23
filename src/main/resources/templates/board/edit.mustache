@@ -1,0 +1,17 @@
+{{>include/header}}
+
+{{#boardList}}
+<form action="/board/update" method="post">
+        <input type="text" name="title" value="{{title}}">
+        <input type="hidden" value="{{id}}" name="id">
+        <br>
+        <br>
+        <textarea name="content">{{content}}</textarea>
+        <a class="btn btn-primary" href="/board/{{id}}/update"><button>수정하기</button></a>
+        <a class="btn btn-primary" href="/board/{{id}}"><button type="button">뒤로가기</button></a>
+</form>
+{{/boardList}}
+
+
+
+{{>include/footer}}
