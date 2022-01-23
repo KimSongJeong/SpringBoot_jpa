@@ -1,0 +1,46 @@
+# Service
+
+ex) 식당
+손님   - User
+서빙   - RestController/Controller
+요리사  - Service
+보조   - Repository
+창고   - DataBase
+
+# Transaction 이란
+- Service의 언무처리 단위로 모두 성공해야 함
+- Transaction은 아래의 모든 단계를 성공해야 함
+ex) 식당 예약
+1. 시간 설정
+2. 테이블 선정
+3. 메뉴 선정
+4. 결제
+5. 영수증 청구
+6. 예약 완료
+
+
+# RollBack
+- 만약 결제단계에서 실패한다면 다시 처음 단위로 돌려놓아야 하는데, 이를 RollBack 이라고 함
+
+
+        List<Board> boardList= dtos.stream()
+                        .map(dto -> dto.toEntity())
+                                .collect(Collectors.toList());
+
+//        위와 아래는 같은 동작을 수행함 stream 문법.........
+//        List<Board> boardList = new ArrayList<>();
+//        for (int i = 0; i < dtos.size(); i++) {
+//            BoardDTO dto = dtos.get(i);
+//            Board entity = dto.toEntity();
+//            boardList.add(entity);
+//        }
+
+
+        // entity묶음을 db로 저장
+        boardList.stream()
+                .forEach(board -> boardRepository.save(board));
+        // 위와 같은 동작 수행
+//        for (int i = 0; i < boardList.size(); i++) {
+//            Board board = boardList.get(i);
+//            boardRepository.save(board);
+//        }

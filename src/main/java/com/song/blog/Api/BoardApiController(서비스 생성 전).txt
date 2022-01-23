@@ -1,0 +1,86 @@
+package com.song.blog.Api;
+
+import com.song.blog.Entity.Board;
+import com.song.blog.DTO.BoardDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.song.blog.Repository.BoardRepository;
+
+import java.util.List;
+
+// Repository와 협업 해서 데이터를 CRUD하는 공간
+
+@RestController // restapi용 컨트롤러, 데이터 제이슨을 반환!!
+@Slf4j
+public class BoardApiController {
+
+    @Autowired
+    private BoardRepository boardRepository;
+
+    // GET
+    @GetMapping("api/index")
+    public List<BoardEntity> index() {
+        return boardRepository.findAll();
+    }
+
+    // GET - 게시글 하나하나
+    @GetMapping("api/index/{id}")
+    public BoardEntity index(@PathVariable Long id) {
+        return boardRepository.findById(id).orElse(null);
+    }
+
+    // POST
+    @PostMapping("api/board/{id}")
+    public BoardEntity create(@RequestBody BoardDTO dto) { // RequestBody : json 데이터를 받아올때!!! 꼭!!!
+        log.info(dto.toString());
+        BoardDTO saved = boardRepository.save(dto.toEntity());
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+
+    // PATCH
+    @PatchMapping("api/board/{id}")
+    public ResponseEntity<BoardEntity> update(@PathVariable Long id, @RequestBody BoardDTO dto) {
+
+        // 1. 수정용 엔티티 생성 (dto 엔티티 변환)
+        BoardEntity board = dto.toEntity();
+        log.info("id : {}, board : {}", id, board.toString());
+
+        // 2. 대상 엔티티를 조회
+        BoardEntity target = boardRepository.findById(id).orElse(null);
+
+        // 3. 잘못된 요청 처리(대상이 없거나, id가 다른 경우)
+        if (target == null || id != board.getId()) {
+            // 잘못된 요청이라는 400번 요청 응답!
+            log.info("잘못된 요청! id : {}, board : {}", id, board.toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+
+        // 4. 업데이트 및 정상 응답(200)
+        // 만약 보내는 데이터 중 title이나 content나 한가지가 없다면, 그것은 null로 기록되는데 그것을 방지하기 위해 아래 patch 추가
+        target.patch(board); // 새롭게 있는 것만 붙여주는 것
+        BoardEntity update = boardRepository.save(target);
+        return ResponseEntity.status(HttpStatus.OK).body(update);
+    }
+
+    // DELETE
+    @DeleteMapping("api/board/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        // 대상 찾기
+        BoardEntity target = boardRepository.findById(id).orElse(null);
+
+        // 잘못된 요청 처리
+        if (target == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        // 대상 삭제
+        boardRepository.delete(target);
+        return ResponseEntity.status(HttpStatus.OK).build(); // body는 null인데 build로 줘도 같은 기능
+    }
+
+
+}

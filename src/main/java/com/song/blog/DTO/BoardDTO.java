@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @ToString
 @AllArgsConstructor
-public class createForm {
+public class BoardDTO {
     private Long id; // id 필드 추가
     private String title;
     private String content;

@@ -1,11 +1,11 @@
-package com.song.blog.controller;
+package com.song.blog.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class homecontroller {
+public class Homecontroller {
 
     @GetMapping("/hi")
     public String hi(Model model) {

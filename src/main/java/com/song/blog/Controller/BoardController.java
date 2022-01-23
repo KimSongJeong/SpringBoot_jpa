@@ -1,8 +1,8 @@
-package com.song.blog.controller;
+package com.song.blog.Controller;
 
-import com.song.blog.DTO.createForm;
+import com.song.blog.DTO.BoardDTO;
 import com.song.blog.Entity.Board;
-import com.song.blog.Repository.boardRepository;
+import com.song.blog.Repository.BoardRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +16,10 @@ import java.util.List;
 
 @Controller
 @Slf4j // 로깅을 위한 어노테이션
-public class boardController {
+public class BoardController {
 
     @Autowired // 스프링 부트가 미리 생성해놓은 객체를 가져다가 자동 연결!!
-    private boardRepository boardRepository;
+    private BoardRepository boardRepository;
 
     @GetMapping("/new")
     public String create() {
@@ -27,7 +27,7 @@ public class boardController {
     }
 
     @PostMapping("/create")
-    public String newcreate(createForm form) {
+    public String newcreate(BoardDTO form) {
 
 
         // 1. DTO를 변환!Entity!
@@ -47,11 +47,11 @@ public class boardController {
 //        log.info("id : " + id);
         // 1. id로 데이터를 가져옴
         // 데이터를 가지고오는 주체 : 레파지토리
-        Board boardEntity = boardRepository.findById(id).orElse(null);
+        Board board = boardRepository.findById(id).orElse(null);
         // id값을 가져올수도 있지만, 없으면 안가져옴, id값이 없다면 null을 반환하라는 것
 
         // 2. 가져온 데이터를 모델에 등록
-        model.addAttribute("board",boardEntity);
+        model.addAttribute("board", board);
 
         // 3. 보여줄 페이지를 설정
         return "board/show";
@@ -72,17 +72,17 @@ public class boardController {
     @GetMapping("board/{id}/edit")
     public String edit(@PathVariable Long id, Model model) {
         // 1. 수정할 데이터 가져오기
-        Board boardEntity = boardRepository.findById(id).orElse(null);
+        Board board = boardRepository.findById(id).orElse(null);
 
         // 2. 모델에 데이터 등록
-        model.addAttribute("boardList", boardEntity);
+        model.addAttribute("boardList", board);
 
         // 3. 뷰 페이지
         return "board/edit";
     }
 
     @PostMapping("board/update")
-    public String update(createForm form) {
+    public String update(BoardDTO form) {
         log.info(form.toString());
 
         // 1. DTO를 엔티티로 변환
