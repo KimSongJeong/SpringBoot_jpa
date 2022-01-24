@@ -26,7 +26,7 @@ public class BoardController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("/new")
+    @GetMapping("/newboard")
     public String create() {
         return "board/new";
     }
