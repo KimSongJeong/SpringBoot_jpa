@@ -18,9 +18,10 @@
             {{/board}}
     </tbody>
 </table>
-<a class="btn btn-primary" href="/board/{{id}}/edit"><button type="button">수정하기</button></a>
-<a class="btn btn-danger" href="/board/{{id}}/delete"><button type="button">삭제하기</button></a>
-<a class="btn btn-primary" href="/board"><button type="button">목록보기</button></a>
+<a class="btn btn-primary" href="/board/{{id}}/edit" type="button">수정하기</a>
+<a class="btn btn-danger" href="/board/{{id}}/delete" type="button">삭제하기</a>
+<a class="btn btn-primary" href="/board" type="button">목록보기</a>
 
+{{>comments/_comments}}
 
 {{>include/footer}}

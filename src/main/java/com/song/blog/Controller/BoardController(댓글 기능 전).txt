@@ -1,10 +1,8 @@
 package com.song.blog.Controller;
 
 import com.song.blog.DTO.BoardDTO;
-import com.song.blog.DTO.CommentDTO;
 import com.song.blog.Entity.Board;
 import com.song.blog.Repository.BoardRepository;
-import com.song.blog.Service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +20,6 @@ public class BoardController {
 
     @Autowired // 스프링 부트가 미리 생성해놓은 객체를 가져다가 자동 연결!!
     private BoardRepository boardRepository;
-
-    @Autowired
-    private CommentService commentService;
 
     @GetMapping("/new")
     public String create() {
@@ -49,21 +44,20 @@ public class BoardController {
 
     @GetMapping("board/{id}") // PathVariable은 url주소에있는 패스로부터 입력이 된다는 것을 뜻함
     public String show(@PathVariable Long id, Model model) {
-
+//        log.info("id : " + id);
         // 1. id로 데이터를 가져옴
         // 데이터를 가지고오는 주체 : 레파지토리
         Board board = boardRepository.findById(id).orElse(null);
-        List<CommentDTO> commentDtos = commentService.comments(id);
+        // id값을 가져올수도 있지만, 없으면 안가져옴, id값이 없다면 null을 반환하라는 것
 
         // 2. 가져온 데이터를 모델에 등록
         model.addAttribute("board", board);
-        model.addAttribute("commentDtos", commentDtos);
 
         // 3. 보여줄 페이지를 설정
         return "board/show";
     }
 
-    @GetMapping(value = {"/", "board", ""})
+    @GetMapping("board")
     public String index(Model model) {
         // 1. 모든 board를 가져온다.
         List<Board> boardEntityList = boardRepository.findAll();
