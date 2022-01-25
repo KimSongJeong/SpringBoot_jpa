@@ -6,6 +6,7 @@ import com.song.blog.Entity.Board;
 import com.song.blog.Entity.Comment;
 import com.song.blog.Repository.BoardRepository;
 import com.song.blog.Repository.CommentRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class CommentService {
 
     @Autowired

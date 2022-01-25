@@ -67,7 +67,7 @@ public class BoardApiController {
     }
 
 
-    // 트랜잭션 -> 실패 -> 폴백
+    // 트랜잭션 -> 실패 -> 롤백
     @PostMapping ("/api/test")
     public ResponseEntity<List<Board>> test(@RequestBody List<BoardDTO> dtos) {
 

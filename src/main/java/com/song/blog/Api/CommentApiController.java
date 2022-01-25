@@ -2,6 +2,7 @@ package com.song.blog.Api;
 
 import com.song.blog.DTO.CommentDTO;
 import com.song.blog.Service.CommentService;
+//import com.song.blog.annotation.RunningTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,7 @@ public class CommentApiController {
     }
 
     // 댓글 삭제
+//    @RunningTime
     @DeleteMapping("/api/comments/{id}")
     public ResponseEntity<CommentDTO> delete(@PathVariable Long id) {
         // 서비스에게 위임

@@ -1,0 +1,37 @@
+IOC란?
+- 컨트롤러를 관리하는 창고
+- controller, service, repository 등 다양한 객체들을 만들고 관리하는 공간
+
+- IOC에 담긴 객체들은 필요에 따라 또다른 객체로 주입될 수 있음
+- 이러한 객체생성과 관리 주입은 개발자의 코드가 아닌, Ioc Container에 의해 통제됨
+
+
+Ioc(Inversion of Control)
+- 프로그램의 흐름이 개발자의 코드가 아닌 외부에 의해 제어되는 것
+
+DI (Dependency Injection)
+- 외부에서 또다른 객체로 주입하는 방식
+
+
+# 객체간 상호결합을 낮춰서 더욱 유연한코드를 만들게 함
+
+
+
+
+- DI 삽입 전, Cheft 클래스
+   public String cook(String menu) {
+
+        // 재료 준비
+//        Pork pork = new Pork("한돈 등심");
+        Beaf beaf = new Beaf("한우 꽃등심");
+        // 이렇게 하면, 각자 다른걸 요리할때마다 바꿔주어야 함
+        // 지속적으로 바꿔줘야한다는 번거로움
+
+        // 요리 반환
+//        return pork.getName() + "으로 만든 " + menu;
+        return beaf.getName() + "으로 만든 " + menu;
+    }
+}
+
+
+- 외부에서 값을 삽입받는 식으로(di) 코드를 개선하면 외부에 요구사항이 변하더라도 내부의 코드가 변경되지 않게 코드를 유연하게 작성할 수 있다.
